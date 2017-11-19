@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--Top RelativeLayout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- TextView for user's password -->
+        <TextView
+            android:id="@+id/tv_user_password"
+            style="@style/DefaultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/signup_pass"
+            android:textAlignment="viewStart" />
+
+
+        <!-- TextView for user's email address -->
+        <TextView
+            android:id="@+id/tv_user_email"
+            style="@style/DefaultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_user_password"
+            android:layout_alignLeft="@id/tv_user_password"
+            android:text="@string/signup_email"
+            android:textAlignment="viewStart" />
+
+    </RelativeLayout>
+
+    <!-- Bottom RelativeLayout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- TextView for "Valar Morghulis" -->
+        <TextView
+            style="@style/DefaultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/valar_morgulis" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">ServusTech</string>
+
+    <string name="tv_email">Email</string>
+    <string name="tv_pass">Password</string>
+    <string name="tv_confirm_pass">Confirmation</string>
+
+    <string name="ed_email">e.g. youremail@email.com</string>
+    <string name="ed_password">6 letters and 1 digit</string>
+    <string name="ed_confirm_password">Retype your password here</string>
+    <string name="bt_sign_up">Signup</string>
+    <string name="valar_morgulis">Valar Morghulis</string>
+
+    <string name="signup_email">email from signup</string>
+    <string name="signup_pass">password from signup</string>
+</resources>

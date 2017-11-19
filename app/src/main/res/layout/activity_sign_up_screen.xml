@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.alex.servustech.Model.MainScreenActivity">
+
+    <!-- Dummy layout to stop the edittext @ed_email from gaining focus on activity start -->
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <!-- ScrollView for UserDetails layout -->
+    <!-- We use it to keep make it easier to create an account
+           if you are in landscape mode or the keyboard is too big -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="80dp">
+
+        <RelativeLayout
+            android:id="@+id/rl_user_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
+            <!-- The icon has size of 48dp, minimum recommended by
+            Android team for clickable objects
+            We add a margin of 50 dp to leave space around it.
+            -->
+            <ImageView
+                android:id="@+id/iv_user_avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="50dp"
+                android:onClick="takePhoto"
+                android:src="@drawable/ic_account_box_black_48dp" />
+
+
+            <!--RelativeLayout containing the info -->
+            <!-- We avoid using nested LinearLayouts since it might slow the app -->
+            <!-- TextView for Email -->
+            <TextView
+                android:id="@+id/tv_email"
+                style="@style/DefaultText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/ed_email"
+                android:text="@string/tv_email" />
+
+
+            <!-- TextView for Password -->
+            <TextView
+                android:id="@+id/tv_password"
+                style="@style/DefaultText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/ed_password"
+                android:layout_below="@id/ed_email"
+                android:text="@string/tv_pass" />
+
+
+            <!-- TextView for Confirmation -->
+            <TextView
+                android:id="@+id/tv_password_confirmation"
+                style="@style/DefaultText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/ed_confirm_password"
+                android:layout_below="@id/ed_password"
+                android:text="@string/tv_confirm_pass" />
+
+
+            <!-- EditText for Email -->
+            <EditText
+                android:id="@+id/ed_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_user_avatar"
+                android:layout_marginBottom="12dp"
+                android:layout_toEndOf="@id/tv_password_confirmation"
+
+                android:hint="@string/ed_email"
+                android:inputType="textEmailAddress"
+                android:textSize="@dimen/default_text_size" />
+
+
+            <!-- EditText for Password -->
+            <EditText
+                android:id="@+id/ed_password"
+                style="@style/DefaultText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ed_email"
+                android:layout_toEndOf="@id/tv_password_confirmation"
+
+                android:hint="@string/ed_password"
+                android:inputType="textPassword"
+                android:textSize="@dimen/default_text_size" />
+
+            <!-- EditText for Password Confirmation -->
+            <EditText
+                android:id="@+id/ed_confirm_password"
+                style="@style/DefaultText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ed_password"
+                android:layout_toEndOf="@id/tv_password_confirmation"
+                android:hint="@string/ed_confirm_password"
+                android:inputType="textPassword"
+                android:textSize="@dimen/default_text_size" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginRight="64dp"
+        android:layout_marginTop="20dp"
+        android:onClick="signUpUser"
+        android:text="@string/bt_sign_up" />
+
+</RelativeLayout>
