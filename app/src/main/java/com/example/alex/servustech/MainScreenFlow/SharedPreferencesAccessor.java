@@ -1,8 +1,11 @@
-package com.example.alex.servustech.Model;
+package com.example.alex.servustech.MainScreenFlow;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.example.alex.servustech.MainScreenFlow.UserDAO;
+import com.example.alex.servustech.Model.User;
 
 public class SharedPreferencesAccessor implements UserDAO {
     private SharedPreferences sharedPreferences;

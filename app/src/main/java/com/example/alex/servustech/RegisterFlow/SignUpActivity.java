@@ -1,4 +1,4 @@
-package com.example.alex.servustech.Model;
+package com.example.alex.servustech.RegisterFlow;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,6 +12,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.alex.servustech.Exceptions.InvalidCredentials;
+import com.example.alex.servustech.MainScreenFlow.SharedPreferencesAccessor;
+import com.example.alex.servustech.MainScreenFlow.UserDAO;
+import com.example.alex.servustech.utils.IUserValidator;
+import com.example.alex.servustech.MainScreenFlow.MainScreenActivity;
+import com.example.alex.servustech.Model.User;
+import com.example.alex.servustech.utils.UserValidator;
 import com.example.alex.servustech.R;
 
 

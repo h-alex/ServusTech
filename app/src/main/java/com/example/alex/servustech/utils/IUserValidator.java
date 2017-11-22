@@ -1,6 +1,7 @@
-package com.example.alex.servustech.Model;
+package com.example.alex.servustech.utils;
 
 import com.example.alex.servustech.Exceptions.InvalidCredentials;
+import com.example.alex.servustech.Model.User;
 
 public interface IUserValidator {
     /* Strings regarding different errors*/

@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.alex.servustech.Model.MainScreenActivity;
-import com.example.alex.servustech.Model.SharedPreferencesAccessor;
-import com.example.alex.servustech.Model.SignUpActivity;
-import com.example.alex.servustech.Model.UserDAO;
+import com.example.alex.servustech.MainScreenFlow.MainScreenActivity;
+import com.example.alex.servustech.MainScreenFlow.SharedPreferencesAccessor;
+import com.example.alex.servustech.RegisterFlow.SignUpActivity;
+import com.example.alex.servustech.MainScreenFlow.UserDAO;
 
 
 public class MainActivity extends AppCompatActivity {
