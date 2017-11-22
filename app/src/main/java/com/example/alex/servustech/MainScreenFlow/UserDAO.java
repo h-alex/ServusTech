@@ -1,5 +1,7 @@
-package com.example.alex.servustech.Model;
+package com.example.alex.servustech.MainScreenFlow;
 
+
+import com.example.alex.servustech.Model.User;
 
 public interface UserDAO {
     void create (User user);

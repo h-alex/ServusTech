@@ -1,9 +1,10 @@
-package com.example.alex.servustech.Model;
+package com.example.alex.servustech.MainScreenFlow;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.example.alex.servustech.Model.User;
 import com.example.alex.servustech.R;
 
 public class MainScreenActivity extends AppCompatActivity {
