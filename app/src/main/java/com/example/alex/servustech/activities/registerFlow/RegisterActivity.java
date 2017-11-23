@@ -8,13 +8,11 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.alex.servustech.utils.ProcessImageTask;
 import com.example.alex.servustech.utils.UserDAOImpl;
-import com.example.alex.servustech.utils.UserDAO;
-import com.example.alex.servustech.utils.IUserValidator;
 import com.example.alex.servustech.activities.mainScreenFlow.MainScreenActivity;
 import com.example.alex.servustech.model.User;
 import com.example.alex.servustech.utils.UserValidator;
@@ -68,15 +66,9 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
         // We do not need to save the picture, just to display it. So we don't retrieve it
 
         User user = new User(email, password);
-//            validator.validate(user, repeatPassword);
-        /* If no error has been thrown, we can proceed further and register the user */
-//            userDAO.create(user);
         mSignUpPresenter.addUser(user, repeatPassword);
-        /* After the user was successfully added, we open the next screen*/
         if (!mHasErrors) {
             startActivity(new Intent(this, MainScreenActivity.class));
-            // After the user is registered, if he presses back, we do not need to take him back to
-            // sign up again. We close this activity.
             finish();
         }
 
@@ -93,14 +85,15 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
     }
 
 
-    /* After the user takes a photo, this function will be called.
-    * If the requestCode is the one we sent and the resultCode is OK, then we
-    * successfully captured a picture. We display it*/
+    /* If we want to resize the picture, we first have to save it.
+     * This way, we save the picture, then we send the path to it to ProcessImageTask which will
+      * read it from there, resize it, and then save it again.*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             showPictureDoubled((Bitmap) extras.get("data"));
+            new ProcessImageTask(this).execute((Bitmap)extras.get("data"));
             /* Save the data via thread
             * + add a loading bar */
         }
@@ -109,7 +102,6 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
 
     private void showPictureDoubled(Bitmap photo) {
         ImageView avatar = (ImageView) findViewById(R.id.iv_user_avatar);
-        // We double the image's size to make fit better in page and look better
         avatar.setImageBitmap(Bitmap.createScaledBitmap(photo, photo.getWidth() * 2, photo.getHeight() * 2, false));
     }
 
