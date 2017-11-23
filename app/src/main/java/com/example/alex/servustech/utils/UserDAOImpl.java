@@ -1,16 +1,15 @@
-package com.example.alex.servustech.MainScreenFlow;
+package com.example.alex.servustech.utils;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.alex.servustech.MainScreenFlow.UserDAO;
-import com.example.alex.servustech.Model.User;
+import com.example.alex.servustech.model.User;
 
-public class SharedPreferencesAccessor implements UserDAO {
+public class UserDAOImpl implements UserDAO {
     private SharedPreferences sharedPreferences;
 
-    public SharedPreferencesAccessor(Context context) {
+    public UserDAOImpl(Context context) {
         this.sharedPreferences = context.getSharedPreferences("register", Context.MODE_PRIVATE);
     }
 
@@ -62,5 +61,10 @@ public class SharedPreferencesAccessor implements UserDAO {
      */
     @Override
     public void delete(User user) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("email");
+        editor.remove("pass");
+
+        editor.commit();
     }
 }

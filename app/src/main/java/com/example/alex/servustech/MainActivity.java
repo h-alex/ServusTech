@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.alex.servustech.MainScreenFlow.MainScreenActivity;
-import com.example.alex.servustech.MainScreenFlow.SharedPreferencesAccessor;
-import com.example.alex.servustech.RegisterFlow.SignUpActivity;
-import com.example.alex.servustech.MainScreenFlow.UserDAO;
+import com.example.alex.servustech.activities.mainScreenFlow.MainScreenActivity;
+import com.example.alex.servustech.utils.UserDAOImpl;
+import com.example.alex.servustech.activities.registerFlow.RegisterActivity;
+import com.example.alex.servustech.utils.UserDAO;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         If he is not, we take him to the register screen. Otherwise, we show the content
          */
         if (userIsRegistered()) {
-            startActivity(new Intent(this, SignUpActivity.class));
+            startActivity(new Intent(this, RegisterActivity.class));
             finish(); // If the user does not want to sign up, we will take him out of the app
         } else {
             startActivity(new Intent(this, MainScreenActivity.class));
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
           * in our system, so it will return false
           * If no user is in the system, it will return true
           */
-        UserDAO userDAO = new SharedPreferencesAccessor(getApplicationContext());
+        UserDAO userDAO = new UserDAOImpl(getApplicationContext());
         return userDAO.read() == null;
     }
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.alex.servustech.Model.MainScreenActivity">
+    tools:context=".activities.mainScreenFlow.MainScreenActivity">
 
     <!-- Dummy layout to stop the edittext @ed_email from gaining focus on activity start -->
     <LinearLayout
@@ -38,7 +38,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="50dp"
-                android:onClick="takePhoto"
                 android:src="@drawable/ic_account_box_black_48dp" />
 
 
@@ -120,6 +119,7 @@
     </ScrollView>
 
     <Button
+        android:id="@+id/btn_register_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -128,7 +128,6 @@
         android:layout_marginLeft="64dp"
         android:layout_marginRight="64dp"
         android:layout_marginTop="20dp"
-        android:onClick="signUpUser"
         android:text="@string/bt_sign_up" />
 
 </RelativeLayout>

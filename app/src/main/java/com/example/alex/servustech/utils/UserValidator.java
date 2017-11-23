@@ -1,9 +1,8 @@
 package com.example.alex.servustech.utils;
 
 
-import com.example.alex.servustech.Exceptions.InvalidCredentials;
-import com.example.alex.servustech.Model.User;
-import com.example.alex.servustech.utils.IUserValidator;
+import com.example.alex.servustech.exceptions.InvalidCredentials;
+import com.example.alex.servustech.model.User;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

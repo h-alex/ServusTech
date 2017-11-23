@@ -1,4 +1,4 @@
-package com.example.alex.servustech.Model;
+package com.example.alex.servustech.model;
 
 import android.graphics.Bitmap;
 
