@@ -40,6 +40,15 @@
                 android:layout_margin="50dp"
                 android:src="@drawable/ic_account_box_black_48dp" />
 
+            <!-- ProgressBar for when saving the image -->
+            <ProgressBar
+                android:id="@+id/pb_while_saving_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_alignBottom="@+id/iv_user_avatar"
+                android:visibility="invisible" />
+
 
             <!--RelativeLayout containing the info -->
             <!-- We avoid using nested LinearLayouts since it might slow the app -->

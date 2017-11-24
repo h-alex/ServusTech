@@ -13,4 +13,5 @@
 
     <string name="signup_email">email from signup</string>
     <string name="signup_pass">password from signup</string>
+    <string name="errors_taking_photo">Cannot save the picture!</string>
 </resources>
