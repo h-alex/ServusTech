@@ -21,7 +21,7 @@ import java.io.IOException;
 
 
 public class ProcessImageTask extends AsyncTask<String, Void, Void> {
-    private static final String TAG = "ProcessImageTask";
+    public static final String TAG = "ProcessImageTask";
 
 
 
@@ -41,6 +41,7 @@ public class ProcessImageTask extends AsyncTask<String, Void, Void> {
         bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
         Bitmap avatar = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 
+        Log.d(TAG, "Path to the image: " + mCurrentPhotoPath);
         // We resize the picture to our desired sized
         image = getResizedPicture(avatar);
 
@@ -49,7 +50,7 @@ public class ProcessImageTask extends AsyncTask<String, Void, Void> {
         // A little delay for the progress bar
         for (int i = 0; i < 1; i++) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 Thread.interrupted();
             }

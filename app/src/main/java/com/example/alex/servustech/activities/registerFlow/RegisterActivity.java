@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -68,10 +69,16 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_sign_up_screen);
         unbinder = ButterKnife.bind(this);
         mSignUpPresenter = new RegisterPresenter(new UserDAOImpl(getApplicationContext()), this);
         mSignUpPresenter.setUserValidator(new UserValidator());
+        
+        if (savedInstanceState != null) {
+            mCurrentPhotoPath = savedInstanceState.getString("pathToPhoto");
+            displayTheImage();
+        }
     }
 
     @Override
@@ -93,6 +100,12 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("pathToPhoto", mCurrentPhotoPath);
+        super.onSaveInstanceState(outState);
     }
 
     /**
@@ -147,6 +160,7 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             mUserAvatar.setVisibility(View.INVISIBLE);  // Hide the avatar
             mProgressBar.setVisibility(View.VISIBLE);   // Show the loading bar;
+            Log.d(ProcessImageTask.TAG, "Accessing new task + " + mCurrentPhotoPath);
             new ProcessImageTask(getApplicationContext()).execute(mCurrentPhotoPath);
         }
     }
@@ -156,6 +170,7 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888; // we make sure the alpha channel is kept ok.
         Bitmap avatar = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
         mUserAvatar.setImageBitmap(avatar);
 
         // Hide the progress bar & show the avatar
@@ -174,7 +189,7 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
     /* Shows a dialog with only one button*/
     private void createDialog(String message) {
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
-        alertDialog.setTitle("Cannot signup!");
+        alertDialog.setTitle(getString(R.string.register_failed));
         alertDialog.setMessage(message);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
