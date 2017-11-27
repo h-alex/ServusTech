@@ -14,6 +14,11 @@
     <string name="signup_email">email from signup</string>
     <string name="signup_pass">password from signup</string>
     <string name="errors_taking_photo">Cannot save the picture!</string>
+    <string name="failed">Failed</string>
 
     <string name="register_failed">Could not register!</string>
+    <string name="permission_not_granted">Storage permission is to be able to save the pictures on your device.</string>
+    <string name="warning_title">Warning</string>
+    <string name="camera_not_available">Camera is busy for the moment. Try again later</string>
+    <string name="file_not_created">A file for the photo could not be created. Please try again</string>
 </resources>

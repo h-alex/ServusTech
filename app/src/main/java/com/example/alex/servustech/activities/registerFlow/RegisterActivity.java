@@ -1,5 +1,6 @@
 package com.example.alex.servustech.activities.registerFlow;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -7,12 +8,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -20,6 +24,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.alex.servustech.R;
 import com.example.alex.servustech.activities.mainScreenFlow.MainScreenActivity;
@@ -40,19 +45,27 @@ import butterknife.Unbinder;
 
 
 public class RegisterActivity extends Activity implements RegisterContract.View {
+    private static String TAG = "MainActivity";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_STORAGE_PERMISSION = 2;
     public static final String BROADCAST_KEY = "com.example.alex.servustech.BROADCAST_KEY";
 
     private Unbinder unbinder;
 
-    @BindView(R.id.ed_email) EditText mEmail;
-    @BindView(R.id.ed_password) EditText mPassword;
-    @BindView(R.id.ed_confirm_password) EditText mConfirmPassword;
-    @BindView(R.id.pb_while_saving_image) ProgressBar mProgressBar;
-    @BindView(R.id.iv_user_avatar) ImageView mUserAvatar;
+    @BindView(R.id.ed_email)
+    EditText mEmail;
+    @BindView(R.id.ed_password)
+    EditText mPassword;
+    @BindView(R.id.ed_confirm_password)
+    EditText mConfirmPassword;
+    @BindView(R.id.pb_while_saving_image)
+    ProgressBar mProgressBar;
+    @BindView(R.id.iv_user_avatar)
+    ImageView mUserAvatar;
 
     private boolean mHasErrors;
     private String mCurrentPhotoPath;
+    private File mPhotoFile;
 
     private RegisterContract.Presenter mSignUpPresenter;
 
@@ -74,10 +87,12 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
         unbinder = ButterKnife.bind(this);
         mSignUpPresenter = new RegisterPresenter(new UserDAOImpl(getApplicationContext()), this);
         mSignUpPresenter.setUserValidator(new UserValidator());
-        
+
         if (savedInstanceState != null) {
             mCurrentPhotoPath = savedInstanceState.getString("pathToPhoto");
             displayTheImage();
+        } else {
+            mUserAvatar.setImageResource(R.drawable.ic_account_box_black_48dp);
         }
     }
 
@@ -109,7 +124,7 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
     }
 
     /**
-     * Called when the user presses "Signup".
+     * Called when the user presses "Sign up".
      * If the credentials are correct, we register him.
      * Otherwise we show a Dialog with what is wrong
      */
@@ -133,27 +148,59 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
     /* We open a new Intent with the action ACTION_IMAGE_CAPTURE to open the camera */
     @OnClick(R.id.iv_user_avatar)
     public void takePhoto(View view) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                showErrors(getString(R.string.errors_taking_photo));
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
+        // First we check for permissions
+        boolean weHavePermission = checkForPermissions();
+        if (weHavePermission) {
+            startCameraForResult();
         }
     }
+
+    private void startCameraForResult() {
+        File photoFile;
+        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (camera.resolveActivity(getPackageManager()) == null) {
+            // display a short message saying the camera is not available atm
+            Toast.makeText(getApplicationContext(), getText(R.string.camera_not_available), Toast.LENGTH_SHORT);
+            return;
+        }
+        try {
+            photoFile = createImageFile();
+        } catch (IOException ioe) {
+            Toast.makeText(getApplicationContext(), getText(R.string.file_not_created), Toast.LENGTH_SHORT);
+            return;
+        }
+        if (photoFile != null) {
+            Uri photoURI = FileProvider.getUriForFile(this,
+                    "com.example.android.fileprovider",
+                    photoFile);
+            camera.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(camera, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+
+    private boolean checkForPermissions() {
+        if (Build.VERSION.SDK_INT < 23) {
+            // Permission is already granted by default when installing the app
+            return true;
+        }
+        // If the version is equal or above 23, we have to deal with the runtimePermission;
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            // We have the permission
+            return true;
+        }
+        // No permission were acquired, ask the user for them
+        // First show a small explanation
+        askForStoragePermission();
+        return false;
+    }
+
+    private void askForStoragePermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                REQUEST_STORAGE_PERMISSION);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -204,17 +251,44 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
+        String imageFileName = "JPEG_" + timeStamp;
+        File appStorageDir = new File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + File.separator +
+                        getString(R.string.app_name));
 
-        // Save a file: path for use with ACTION_VIEW intents
+        if (!appStorageDir.exists())
+            appStorageDir.mkdir();
+
+        File image = new File(appStorageDir.getAbsolutePath() + File.separator + imageFileName + ".jpg");
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_STORAGE_PERMISSION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startCameraForResult();
+                } else { // Permission is not accepted.
+                    AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
+                    alertDialog.setTitle(R.string.warning_title);
+                    alertDialog.setMessage(getString(R.string.permission_not_granted));
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
 
 }

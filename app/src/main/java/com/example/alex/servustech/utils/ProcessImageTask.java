@@ -110,4 +110,8 @@ public class ProcessImageTask extends AsyncTask<String, Void, Void> {
         /* Send the signal to say that our image has been successfully processed */
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent(RegisterActivity.BROADCAST_KEY));
     }
+
+    private void askForPermission() {
+
+    }
 }
