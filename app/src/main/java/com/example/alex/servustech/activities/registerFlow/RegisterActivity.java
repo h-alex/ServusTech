@@ -160,13 +160,13 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
         Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (camera.resolveActivity(getPackageManager()) == null) {
             // display a short message saying the camera is not available atm
-            Toast.makeText(getApplicationContext(), getText(R.string.camera_not_available), Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), getText(R.string.camera_not_available), Toast.LENGTH_SHORT).show();
             return;
         }
         try {
             photoFile = createImageFile();
         } catch (IOException ioe) {
-            Toast.makeText(getApplicationContext(), getText(R.string.file_not_created), Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), getText(R.string.file_not_created), Toast.LENGTH_SHORT).show();
             return;
         }
         if (photoFile != null) {
