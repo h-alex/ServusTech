@@ -21,4 +21,10 @@
     <string name="warning_title">Warning</string>
     <string name="camera_not_available">Camera is busy for the moment. Try again later</string>
     <string name="file_not_created">A file for the photo could not be created. Please try again</string>
+    <string name="random_fact">Java was called Oak at the beginning</string>
+
+    <string-array name="drawer_options">
+        <item>Credentials</item>
+        <item>Random fact</item>
+    </string-array>
 </resources>
