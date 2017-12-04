@@ -30,6 +30,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                 mValidator.validate(user, confirmationPassword);
             } catch (InvalidCredentials ic) {
                 mRegisterView.showErrors(ic.getMessage());
+                return;
             }
             mUserDAO.create(user);
         }
