@@ -45,7 +45,7 @@ import butterknife.Unbinder;
 
 
 public class RegisterActivity extends Activity implements RegisterContract.View {
-    private static String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_STORAGE_PERMISSION = 2;
     public static final String BROADCAST_KEY = "com.example.alex.servustech.BROADCAST_KEY";
@@ -63,7 +63,7 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
     @BindView(R.id.iv_user_avatar)
     ImageView mUserAvatar;
 
-    private boolean mHasErrors;
+    private boolean mHasErrors = true;
     private String mCurrentPhotoPath;
     private File mPhotoFile;
 
@@ -88,6 +88,7 @@ public class RegisterActivity extends Activity implements RegisterContract.View 
         mSignUpPresenter = new RegisterPresenter(new UserDAOImpl(getApplicationContext()), this);
         mSignUpPresenter.setUserValidator(new UserValidator());
 
+        // If we device was rotated/went background then foreground again etc/ we reload the photo
         if (savedInstanceState != null) {
             mCurrentPhotoPath = savedInstanceState.getString("pathToPhoto");
             displayTheImage();

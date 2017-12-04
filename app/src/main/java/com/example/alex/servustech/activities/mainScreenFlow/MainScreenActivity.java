@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.alex.servustech.R;
+import com.example.alex.servustech.fragments.randomFacts.RandomFactsFragment;
+import com.example.alex.servustech.fragments.details.DetailsFragment;
 import com.example.alex.servustech.utils.UserDAOImpl;
 
 import butterknife.BindView;
@@ -52,7 +54,6 @@ public class MainScreenActivity extends AppCompatActivity {
 
         // we set the default fragment
         changeFragment(DEFAULT_FRAGMENT_POSITION);
-
     }
 
     private void changeFragment(int position) {

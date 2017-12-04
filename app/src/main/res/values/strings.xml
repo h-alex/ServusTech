@@ -26,5 +26,8 @@
     <string-array name="drawer_options">
         <item>Credentials</item>
         <item>Random fact</item>
+        <item>Recycle View</item>
     </string-array>
+
+    <string name="recycle_view_info">Contains(or will contain) a list of pictures-string list using an `Recycle View`</string>
 </resources>

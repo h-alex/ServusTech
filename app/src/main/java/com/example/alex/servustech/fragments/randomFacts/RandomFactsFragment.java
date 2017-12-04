@@ -1,4 +1,4 @@
-package com.example.alex.servustech.activities.mainScreenFlow;
+package com.example.alex.servustech.fragments.randomFacts;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.alex.servustech.R;
+import com.example.alex.servustech.activities.mainScreenFlow.MainScreenActivity;
 
 public class RandomFactsFragment extends Fragment{
     private String mTitle;

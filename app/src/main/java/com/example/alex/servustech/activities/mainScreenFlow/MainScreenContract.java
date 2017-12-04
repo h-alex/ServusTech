@@ -4,7 +4,7 @@ import com.example.alex.servustech.BaseView;
 import com.example.alex.servustech.model.User;
 import com.example.alex.servustech.utils.UserDAO;
 
-interface MainScreenContract {
+public interface MainScreenContract {
     interface View extends BaseView<Presenter> {
         void showCredentials(User user);
     }

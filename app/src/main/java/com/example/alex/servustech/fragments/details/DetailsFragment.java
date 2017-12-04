@@ -1,4 +1,4 @@
-package com.example.alex.servustech.activities.mainScreenFlow;
+package com.example.alex.servustech.fragments.details;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.example.alex.servustech.MainActivity;
 import com.example.alex.servustech.R;
+import com.example.alex.servustech.activities.mainScreenFlow.MainScreenActivity;
+import com.example.alex.servustech.activities.mainScreenFlow.MainScreenContract;
 import com.example.alex.servustech.model.User;
 import com.example.alex.servustech.utils.UserDAO;
 import com.example.alex.servustech.utils.UserDAOImpl;
@@ -25,8 +27,8 @@ public class DetailsFragment extends Fragment implements MainScreenContract.View
     private MainScreenContract.Presenter mPresenter;
     private Unbinder mUnbinder;
 
-    @BindView(R.id.tv_user_email) TextView mUserEmail;
-   @BindView(R.id.tv_user_password) TextView mUserPassword;
+    @BindView(R.id.tv_user_email) private TextView mUserEmail;
+   @BindView(R.id.tv_user_password) private TextView mUserPassword;
 
     private String mTitle;
 
