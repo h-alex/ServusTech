@@ -44,7 +44,6 @@ public class DetailsFragment extends Fragment implements MainScreenContract.View
         if (getArguments() != null) {
             mTitle = getArguments().getString(MainScreenActivity.KEY_TO_FRAGMENT_TITLE);
             getActivity().setTitle(mTitle);
-            Toast.makeText(getActivity().getApplicationContext(), mTitle, Toast.LENGTH_SHORT).show();
         }
         mPresenter.getCredentials();
         return root;

@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.example.alex.servustech.R;
+import com.example.alex.servustech.activities.mainScreenFlow.MainScreenActivity;
 import com.example.alex.servustech.adapter.CustomAdapter;
 
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ import butterknife.Unbinder;
 
 
 public class RecycleViewFragment extends Fragment {
+    private String mTitle;
+
     @BindView(R.id.recycle_view)
      RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -49,7 +53,10 @@ public class RecycleViewFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.recycler_view, container, false);
         // Bind the @Butterknife
         mUnbinder = ButterKnife.bind(this, rootView);
-
+        if (getArguments() != null) {
+            mTitle = getArguments().getString(MainScreenActivity.KEY_TO_FRAGMENT_TITLE);
+            getActivity().setTitle(mTitle);
+        }
         // we set the type of layout we'll be using.
         // This tells our recycleView how to position the items in page.
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
