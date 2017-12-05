@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.example.alex.servustech.R;
 import com.example.alex.servustech.fragments.randomFacts.RandomFactsFragment;
 import com.example.alex.servustech.fragments.details.DetailsFragment;
+import com.example.alex.servustech.fragments.recycleView.RecycleViewFragment;
 import com.example.alex.servustech.utils.UserDAOImpl;
 
 import butterknife.BindView;
@@ -71,6 +72,8 @@ public class MainScreenActivity extends AppCompatActivity {
         switch (fragmentName) {
             case "Random fact":
                 return new RandomFactsFragment();
+            case "Recycle View":
+                return new RecycleViewFragment();
             default: // set here the presenter, etc
                 DetailsFragment fragment = new DetailsFragment();
                 mPresenter.setView(fragment);

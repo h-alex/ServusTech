@@ -27,8 +27,8 @@ public class DetailsFragment extends Fragment implements MainScreenContract.View
     private MainScreenContract.Presenter mPresenter;
     private Unbinder mUnbinder;
 
-    @BindView(R.id.tv_user_email) private TextView mUserEmail;
-   @BindView(R.id.tv_user_password) private TextView mUserPassword;
+    @BindView(R.id.tv_user_email)  TextView mUserEmail;
+   @BindView(R.id.tv_user_password)  TextView mUserPassword;
 
     private String mTitle;
 
