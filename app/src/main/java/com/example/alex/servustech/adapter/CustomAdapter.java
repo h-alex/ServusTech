@@ -4,23 +4,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.alex.servustech.R;
+import com.example.alex.servustech.model.Category;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
-    private List<String> mDataSet;
+    private List<Category> mDataSet;
 
-    public CustomAdapter(List<String> dataSet) {
+    public CustomAdapter(List<Category> dataSet) {
         mDataSet = dataSet;
     }
 
 
-    // Called when a new view when the layout manager requests it
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater
@@ -30,11 +34,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     }
 
 
-    // Replaces the content of a view.
-    // For instance, if a view would have an image and 2 textviews, here we'd update the data
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.getTextView().setText(mDataSet.get(position));
+        holder.id.setText(mDataSet.get(position).getId());
+        holder.name.setText(mDataSet.get(position).getName());
+
+        if (mDataSet.get(position).getIcon() != null) {
+            Picasso.with(holder.name.getContext())
+                    .load(mDataSet.get(position).getIcon().getImageURL())
+                    .error(R.drawable.ic_broken_image_black_48dp)
+                    .into(holder.icon);
+        } else {
+            holder.icon.setImageResource(R.drawable.ic_broken_image_black_48dp);
+        }
     }
 
 
@@ -44,17 +56,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textView; // We currently only have a textview
-        // If we were to have multiple items, here they'd go.
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_category_id)
+        TextView id;
+        @BindView(R.id.tv_category_name)
+        TextView name;
+        @BindView(R.id.iv_category_icon)
+        ImageView icon;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.tv_recycle_view);
-        }
-
-        public TextView getTextView() {
-            return textView;
+            ButterKnife.bind(this, itemView);
         }
     }
 }

@@ -30,4 +30,18 @@
     </string-array>
 
     <string name="recycle_view_info">Contains(or will contain) a list of pictures-string list using an `Recycle View`</string>
+
+     <!-- Strings used in @recycle_view_item.xml -->
+    <string name="hint_for_id">ID of the Category</string>
+    <string name="hint_for_name">Name of the Category</string>
+    <string name="hint_for_image">Image of the category</string>
+
+    <!-- Strings used in @recycle_view.xml -->
+    <string name="getting_data">Loading the data from the server</string>
+
+
+    <!-- Strings used in @RecycleViewContract.OnFailure -->
+    <string name="no_internet_connection">Could not connect to the internet.</string>
+    <string name="null_list">Could not retrieve any data from the server. Please try again later</string>
+
 </resources>

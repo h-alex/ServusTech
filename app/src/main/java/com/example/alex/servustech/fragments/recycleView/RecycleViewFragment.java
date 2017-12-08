@@ -8,31 +8,33 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.alex.servustech.R;
 import com.example.alex.servustech.activities.mainScreenFlow.MainScreenActivity;
 import com.example.alex.servustech.adapter.CustomAdapter;
+import com.example.alex.servustech.model.Category;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class RecycleViewFragment extends Fragment {
-    private String mTitle;
-
+public class RecycleViewFragment extends Fragment implements RecycleViewContract.View {
     @BindView(R.id.recycle_view)
-     RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    RecyclerView mRecyclerView;
+
+    @BindView(R.id.recycle_view_loading_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.recycle_view_helping_text_view)
+    TextView mTextView;
 
     private Unbinder mUnbinder;
 
-    private static final int DATASET_LENGTH = 60;
-    ArrayList<String> mDataSet;
+    RecycleViewContract.Presenter mPresenter;
 
     public RecycleViewFragment() {
     }
@@ -40,43 +42,59 @@ public class RecycleViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
-        // We just load some data. This should usually come from DATABASE local or server type;
-        // This should be done in BACKGROUND, as it will freeze the main Thread
-        initDataSet();
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) { // the real shit
-        // Get a view
-        // So we have something to work with
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recycler_view, container, false);
+
         // Bind the @Butterknife
         mUnbinder = ButterKnife.bind(this, rootView);
         if (getArguments() != null) {
-            mTitle = getArguments().getString(MainScreenActivity.KEY_TO_FRAGMENT_TITLE);
-            getActivity().setTitle(mTitle);
+            String title = getArguments().getString(MainScreenActivity.KEY_TO_FRAGMENT_TITLE);
+            getActivity().setTitle(title);
         }
-        // we set the type of layout we'll be using.
-        // This tells our recycleView how to position the items in page.
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(new CustomAdapter(mDataSet));
 
+        mPresenter = new RecycleViewPresenter(this);
+        mPresenter.requestResults();
 
         return rootView;
-    }
-
-    private void initDataSet() {
-        mDataSet = new ArrayList<>();
-        for (int i = 0; i < DATASET_LENGTH; i++) {
-            mDataSet.add("This is element #" + i);
-        }
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
+    }
+
+    @Override
+    public void setPresenter(RecycleViewContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void onSuccess(List<Category> results) {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(new CustomAdapter(results));
+        hideElements();
+    }
+
+    @Override
+    public void onFailure(RecycleViewContract.OnFailure failure) {
+        mProgressBar.setVisibility(View.INVISIBLE);
+        switch (failure) {
+            case LIST_EMPTY:
+                mTextView.setText(R.string.null_list);
+                break;
+            case NO_INTERNET_CONNECTION:
+                mTextView.setText(R.string.no_internet_connection);
+                break;
+        }
+    }
+
+    private void hideElements() {
+        mTextView.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.GONE);
     }
 }

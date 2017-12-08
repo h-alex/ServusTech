@@ -32,6 +32,7 @@ public class MainScreenActivity extends AppCompatActivity {
     ListView mDrawerList;
 
     private String[] mDrawerOptions;
+    private int mSelectedFragment;
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -43,7 +44,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
         mDrawerOptions = getResources().getStringArray(R.array.drawer_options);
         // Set the adapter: context, How should the objects be displayed, what objects should be displayed
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerOptions));
+        mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, mDrawerOptions));
         // Listener for the click events
         mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
@@ -53,11 +54,18 @@ public class MainScreenActivity extends AppCompatActivity {
             }
         });
 
-        // we set the default fragment
-        changeFragment(DEFAULT_FRAGMENT_POSITION);
+        // If there is no saved instance, we display the default fragment
+        if (savedInstance == null) {
+            mSelectedFragment = -1;
+            changeFragment(DEFAULT_FRAGMENT_POSITION);
+        } else { // We have something saved!
+            mSelectedFragment = savedInstance.getInt("selectedFragment");
+            changeFragment(mSelectedFragment);
+        }
     }
 
     private void changeFragment(int position) {
+        mSelectedFragment = position;
         Fragment fragment = getSelectedFragment(mDrawerOptions[position]);
         Bundle args = new Bundle();
         args.putString(KEY_TO_FRAGMENT_TITLE, mDrawerOptions[position]);
@@ -86,6 +94,13 @@ public class MainScreenActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("mSelectedFragment", mSelectedFragment);
+        super.onSaveInstanceState(outState);
     }
 
 }

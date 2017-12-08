@@ -3,4 +3,8 @@
     <dimen name="default_text_size">14sp</dimen>
     <dimen name="avatar_target_size">150dp</dimen>
     <dimen name="drawer_width">240dp</dimen>
+
+
+    <dimen name="image_height">64dp</dimen>
+    <dimen name="image_width">64dp</dimen>
 </resources>
