@@ -4,11 +4,18 @@
     android:layout_height="match_parent"
     android:scrollbars="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/recycle_view_refresher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/recycle_view_loading_bar"
@@ -21,8 +28,8 @@
         android:id="@+id/recycle_view_helping_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/getting_data"
         android:layout_below="@+id/recycle_view_loading_bar"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:hint="@string/getting_data" />
 
 </RelativeLayout>

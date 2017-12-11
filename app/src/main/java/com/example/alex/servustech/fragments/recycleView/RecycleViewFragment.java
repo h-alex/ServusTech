@@ -3,6 +3,7 @@ package com.example.alex.servustech.fragments.recycleView;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alex.servustech.R;
 import com.example.alex.servustech.activities.mainScreenFlow.MainScreenActivity;
@@ -24,6 +26,8 @@ import butterknife.Unbinder;
 
 
 public class RecycleViewFragment extends Fragment implements RecycleViewContract.View {
+    private static final String TAG = RecycleViewFragment.class.getSimpleName();
+    private static int numberOfRefreshes = 0;
     @BindView(R.id.recycle_view)
     RecyclerView mRecyclerView;
 
@@ -31,6 +35,8 @@ public class RecycleViewFragment extends Fragment implements RecycleViewContract
     ProgressBar mProgressBar;
     @BindView(R.id.recycle_view_helping_text_view)
     TextView mTextView;
+    @BindView(R.id.recycle_view_refresher)
+    SwipeRefreshLayout mRefreshLayout;
 
     private Unbinder mUnbinder;
 
@@ -49,7 +55,7 @@ public class RecycleViewFragment extends Fragment implements RecycleViewContract
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recycler_view, container, false);
 
-        // Bind the @Butterknife
+        // Bind the @ButterKnife
         mUnbinder = ButterKnife.bind(this, rootView);
         if (getArguments() != null) {
             String title = getArguments().getString(MainScreenActivity.KEY_TO_FRAGMENT_TITLE);
@@ -58,6 +64,7 @@ public class RecycleViewFragment extends Fragment implements RecycleViewContract
 
         mPresenter = new RecycleViewPresenter(this);
         mPresenter.requestResults();
+        mRefreshLayout.setOnRefreshListener(getSwipeToRefreshListener());
 
         return rootView;
     }
@@ -96,5 +103,17 @@ public class RecycleViewFragment extends Fragment implements RecycleViewContract
     private void hideElements() {
         mTextView.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.GONE);
+        mRefreshLayout.setRefreshing(false);
     }
+
+
+    private SwipeRefreshLayout.OnRefreshListener getSwipeToRefreshListener() {
+        return new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.requestResults();
+            }
+        };
+    }
+
 }
