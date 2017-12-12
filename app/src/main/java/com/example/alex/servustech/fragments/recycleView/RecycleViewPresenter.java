@@ -18,10 +18,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-
 public class RecycleViewPresenter implements RecycleViewContract.Presenter {
     private static final String TAG = "RecycleViewPresenter";
-
     RecycleViewContract.View mView;
     private List<Category> mCategories;
 
@@ -43,20 +41,22 @@ public class RecycleViewPresenter implements RecycleViewContract.Presenter {
         return new Callback<FoursquareResponse>() {
             @Override
             public void onResponse(Call<FoursquareResponse> call, Response<FoursquareResponse> response) {
-                FoursquareResponse foursquareResponse = response.body();
-                if (foursquareResponse == null) {
+                if (!response.isSuccessful()) {
                     mView.onFailure(RecycleViewContract.OnFailure.LIST_EMPTY);
                     return;
                 }
-                mCategories = foursquareResponse.getCategories(); // body can be null
-                if (mCategories != null) {
-                    for (int i = 0; i <50 ; i++) {
-                        mCategories.add(new Category("Dummy ID " + i, "Dummy description "+ i  ));
+                if (response.body() != null){
+                    mCategories = response.body().getCategories();
+                    if (mCategories != null) {
+                        for (int i = 0; i < 50; i++) {
+                            mCategories.add(new Category("Dummy ID " + i, "Dummy description " + i));
+                        }
+                        mView.onSuccess(mCategories);
+                    } else {
+                        mView.onFailure(RecycleViewContract.OnFailure.LIST_EMPTY);
                     }
-                    mView.onSuccess(mCategories);
-                } else {
-                    mView.onFailure(RecycleViewContract.OnFailure.LIST_EMPTY);
                 }
+
             }
 
             @Override

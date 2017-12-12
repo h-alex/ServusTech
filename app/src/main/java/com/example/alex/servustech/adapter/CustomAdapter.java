@@ -55,6 +55,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         return mDataSet.size();
     }
 
+    public void replaceAll(List<Category> results) {
+        mDataSet.clear();
+        mDataSet.addAll(results);
+        notifyDataSetChanged();
+    }
+
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_category_id)

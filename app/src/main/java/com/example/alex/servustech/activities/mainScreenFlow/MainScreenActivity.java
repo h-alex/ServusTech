@@ -34,7 +34,6 @@ public class MainScreenActivity extends AppCompatActivity {
     private int mSelectedFragment;
 
 
-
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
@@ -53,15 +52,15 @@ public class MainScreenActivity extends AppCompatActivity {
             }
         });
 
-        // If there is no saved instance, we display the default fragment
+        /*
+         If there is no saved instance, we display the default fragment
+         If there is no saved instance, it means we have no fragments previously saved
+         We display the default one
+         */
         if (savedInstance == null) {
             changeFragment(DEFAULT_FRAGMENT_POSITION);
-        } else { // We have a position previously saved
-            mSelectedFragment = savedInstance.getInt(FRAGMENT_NUMBER_KEY);
-            changeFragment(mSelectedFragment);
         }
     }
-
 
 
     private void changeFragment(int position) {
@@ -77,18 +76,16 @@ public class MainScreenActivity extends AppCompatActivity {
     }
 
 
-
     private Fragment getSelectedFragment(String fragmentName) {
         switch (fragmentName) {
             case "Random fact":
                 return new RandomFactsFragment();
             case "Recycle View":
-                return new RecycleViewFragment();
+                return RecycleViewFragment.newInstance();
             default:
-                return  new DetailsFragment();
+                return new DetailsFragment();
         }
     }
-
 
 
     @Override
@@ -98,10 +95,11 @@ public class MainScreenActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        /* even if we do not need to remember the number,
+         we must put something in the bundle so it won't be null */
         outState.putInt(FRAGMENT_NUMBER_KEY, mSelectedFragment);
     }
 
