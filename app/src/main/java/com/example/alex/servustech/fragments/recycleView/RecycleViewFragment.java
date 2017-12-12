@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.alex.servustech.R;
 import com.example.alex.servustech.activities.mainScreenFlow.MainScreenActivity;
@@ -50,7 +49,6 @@ public class RecycleViewFragment extends Fragment implements RecycleViewContract
         super.onCreate(savedInstance);
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recycler_view, container, false);
@@ -58,7 +56,7 @@ public class RecycleViewFragment extends Fragment implements RecycleViewContract
         // Bind the @ButterKnife
         mUnbinder = ButterKnife.bind(this, rootView);
         if (getArguments() != null) {
-            String title = getArguments().getString(MainScreenActivity.KEY_TO_FRAGMENT_TITLE);
+            String title = getArguments().getString(MainScreenActivity.FRAGMENT_TITLE_KEY);
             getActivity().setTitle(title);
         }
 

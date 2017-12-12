@@ -10,10 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.alex.servustech.R;
-import com.example.alex.servustech.fragments.randomFacts.RandomFactsFragment;
 import com.example.alex.servustech.fragments.details.DetailsFragment;
+import com.example.alex.servustech.fragments.randomFacts.RandomFactsFragment;
 import com.example.alex.servustech.fragments.recycleView.RecycleViewFragment;
-import com.example.alex.servustech.utils.UserDAOImpl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,10 +20,10 @@ import butterknife.Unbinder;
 
 public class MainScreenActivity extends AppCompatActivity {
     private static final int DEFAULT_FRAGMENT_POSITION = 0;
-    public static final String KEY_TO_FRAGMENT_TITLE = "fragment_title";
+    private static final String FRAGMENT_NUMBER_KEY = "current_fragment_position";
+    public static final String FRAGMENT_TITLE_KEY = "fragment_title";
 
     private Unbinder mUnbinder;
-    private MainScreenContract.Presenter mPresenter;
 
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -34,17 +33,17 @@ public class MainScreenActivity extends AppCompatActivity {
     private String[] mDrawerOptions;
     private int mSelectedFragment;
 
+
+
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_main_drawer);
         mUnbinder = ButterKnife.bind(this);
-        mPresenter = new MainScreenPresenter();
-        mPresenter.setDAO(new UserDAOImpl(getApplicationContext()));
 
         mDrawerOptions = getResources().getStringArray(R.array.drawer_options);
-        // Set the adapter: context, How should the objects be displayed, what objects should be displayed
         mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, mDrawerOptions));
+
         // Listener for the click events
         mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
@@ -56,19 +55,20 @@ public class MainScreenActivity extends AppCompatActivity {
 
         // If there is no saved instance, we display the default fragment
         if (savedInstance == null) {
-            mSelectedFragment = -1;
             changeFragment(DEFAULT_FRAGMENT_POSITION);
-        } else { // We have something saved!
-            mSelectedFragment = savedInstance.getInt("selectedFragment");
+        } else { // We have a position previously saved
+            mSelectedFragment = savedInstance.getInt(FRAGMENT_NUMBER_KEY);
             changeFragment(mSelectedFragment);
         }
     }
+
+
 
     private void changeFragment(int position) {
         mSelectedFragment = position;
         Fragment fragment = getSelectedFragment(mDrawerOptions[position]);
         Bundle args = new Bundle();
-        args.putString(KEY_TO_FRAGMENT_TITLE, mDrawerOptions[position]);
+        args.putString(FRAGMENT_TITLE_KEY, mDrawerOptions[position]);
         fragment.setArguments(args);
         getFragmentManager()
                 .beginTransaction()
@@ -76,19 +76,20 @@ public class MainScreenActivity extends AppCompatActivity {
                 .commit();
     }
 
+
+
     private Fragment getSelectedFragment(String fragmentName) {
         switch (fragmentName) {
             case "Random fact":
                 return new RandomFactsFragment();
             case "Recycle View":
                 return new RecycleViewFragment();
-            default: // set here the presenter, etc
-                DetailsFragment fragment = new DetailsFragment();
-                mPresenter.setView(fragment);
-                fragment.setPresenter(mPresenter);
-                return fragment;
+            default:
+                return  new DetailsFragment();
         }
     }
+
+
 
     @Override
     public void onDestroy() {
@@ -97,10 +98,11 @@ public class MainScreenActivity extends AppCompatActivity {
     }
 
 
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt("mSelectedFragment", mSelectedFragment);
         super.onSaveInstanceState(outState);
+        outState.putInt(FRAGMENT_NUMBER_KEY, mSelectedFragment);
     }
 
 }

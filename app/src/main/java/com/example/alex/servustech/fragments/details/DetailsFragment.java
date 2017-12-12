@@ -8,12 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.alex.servustech.MainActivity;
 import com.example.alex.servustech.R;
 import com.example.alex.servustech.activities.mainScreenFlow.MainScreenActivity;
-import com.example.alex.servustech.activities.mainScreenFlow.MainScreenContract;
 import com.example.alex.servustech.model.User;
 import com.example.alex.servustech.utils.UserDAO;
 import com.example.alex.servustech.utils.UserDAOImpl;
@@ -23,36 +21,48 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class DetailsFragment extends Fragment implements MainScreenContract.View {
-    private MainScreenContract.Presenter mPresenter;
+public class DetailsFragment extends Fragment implements DetailsContract.View {
+    private DetailsContract.Presenter mPresenter;
     private Unbinder mUnbinder;
 
-    @BindView(R.id.tv_user_email)  TextView mUserEmail;
-   @BindView(R.id.tv_user_password)  TextView mUserPassword;
+    @BindView(R.id.tv_user_email)
+    TextView mUserEmail;
+    @BindView(R.id.tv_user_password)
+    TextView mUserPassword;
+
 
     private String mTitle;
 
     public DetailsFragment() {
     }
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.activity_main_screen, container, false);
 
+        mPresenter = new DetailsPresenter(this, new UserDAOImpl(getActivity().getApplicationContext()));
+        mPresenter.setView(this);
+
         mUnbinder = ButterKnife.bind(this, root);
         if (getArguments() != null) {
-            mTitle = getArguments().getString(MainScreenActivity.KEY_TO_FRAGMENT_TITLE);
+            mTitle = getArguments().getString(MainScreenActivity.FRAGMENT_TITLE_KEY);
             getActivity().setTitle(mTitle);
         }
         mPresenter.getCredentials();
         return root;
     }
 
+
+
     @Override
-    public void setPresenter(MainScreenContract.Presenter presenter) {
+    public void setPresenter(DetailsContract.Presenter presenter) {
         mPresenter = presenter;
     }
+
+
 
     @Override
     public void showCredentials(User user) {
@@ -60,11 +70,15 @@ public class DetailsFragment extends Fragment implements MainScreenContract.View
         mUserPassword.setText(user.getPassword());
     }
 
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
     }
+
+
 
     /* TODO DELETE ME!
 * I'm used for testing only! */

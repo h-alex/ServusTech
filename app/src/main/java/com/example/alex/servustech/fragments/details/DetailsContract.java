@@ -1,10 +1,10 @@
-package com.example.alex.servustech.activities.mainScreenFlow;
+package com.example.alex.servustech.fragments.details;
 
 import com.example.alex.servustech.BaseView;
 import com.example.alex.servustech.model.User;
 import com.example.alex.servustech.utils.UserDAO;
 
-public interface MainScreenContract {
+public interface DetailsContract {
     interface View extends BaseView<Presenter> {
         void showCredentials(User user);
     }
@@ -12,6 +12,6 @@ public interface MainScreenContract {
     interface Presenter {
         void getCredentials();
         void setDAO(UserDAO userDAO);
-        void setView(MainScreenContract.View view);
+        void setView(DetailsContract.View view);
     }
 }

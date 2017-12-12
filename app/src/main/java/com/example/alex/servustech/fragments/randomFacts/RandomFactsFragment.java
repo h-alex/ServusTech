@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.alex.servustech.R;
 import com.example.alex.servustech.activities.mainScreenFlow.MainScreenActivity;
@@ -23,7 +22,7 @@ public class RandomFactsFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.random_facts, container, false);
         if (getArguments() != null) {
-            mTitle = getArguments().getString(MainScreenActivity.KEY_TO_FRAGMENT_TITLE);
+            mTitle = getArguments().getString(MainScreenActivity.FRAGMENT_TITLE_KEY);
             getActivity().setTitle(mTitle);
         }
         return root;

@@ -1,16 +1,16 @@
-package com.example.alex.servustech.activities.mainScreenFlow;
+package com.example.alex.servustech.fragments.details;
 
 import com.example.alex.servustech.utils.UserDAO;
 
 
-public class MainScreenPresenter implements MainScreenContract.Presenter {
+public class DetailsPresenter implements DetailsContract.Presenter {
     private UserDAO mUserDAO;
-    private MainScreenContract.View mMainScreenView;
+    private DetailsContract.View mMainScreenView;
 
-    public MainScreenPresenter(){
+    public DetailsPresenter(){
     }
 
-    MainScreenPresenter(MainScreenContract.View view, UserDAO userDAO) {
+    DetailsPresenter(DetailsContract.View view, UserDAO userDAO) {
         mUserDAO = userDAO;
         mMainScreenView = view;
     }
@@ -19,7 +19,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
         mUserDAO = userDAO;
     }
 
-    public void setView(MainScreenContract.View view) {
+    public void setView(DetailsContract.View view) {
         mMainScreenView = view;
     }
 

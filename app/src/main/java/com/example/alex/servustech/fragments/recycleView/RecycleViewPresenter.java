@@ -22,11 +22,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RecycleViewPresenter implements RecycleViewContract.Presenter {
     private static final String TAG = "RecycleViewPresenter";
 
-    private static final String URL = "https://api.foursquare.com/v2/venues/";
-    private static final String CLIENT_ID = "LZGSXOHYCY2T5OEROLIAW4XPK4XY1TALXQUDTBN15ZSS3SPZ";
-    private static final String CLIENT_SECRET = "KOXCULTUGRCHJ4Z3BVD3WCVYU12WECZRMXSDED05MFACHUAR";
-    private static final String VERSION_UP_TO = "20171206";
-
     RecycleViewContract.View mView;
     private List<Category> mCategories;
 
