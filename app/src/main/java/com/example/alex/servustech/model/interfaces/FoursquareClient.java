@@ -13,6 +13,5 @@ import retrofit2.http.QueryMap;
 public interface FoursquareClient {
 
     @GET("categories")
-    Call<FoursquareResponse> categories(/*@QueryMap Map<String, String> extraData*/);
-    /* Wrap it in a Call<> to make it async, not blocking the UI this way. */
+    Call<FoursquareResponse> categories();
 }
