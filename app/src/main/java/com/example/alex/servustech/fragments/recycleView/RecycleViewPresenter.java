@@ -1,21 +1,15 @@
 package com.example.alex.servustech.fragments.recycleView;
 
-import android.util.Log;
-
 import com.example.alex.servustech.model.Category;
 import com.example.alex.servustech.model.FoursquareResponse;
 import com.example.alex.servustech.model.interfaces.FoursquareClient;
 import com.example.alex.servustech.utils.RetrofitConnector;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RecycleViewPresenter implements RecycleViewContract.Presenter {

@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.example.alex.servustech.R;
 import com.example.alex.servustech.fragments.details.DetailsFragment;
+import com.example.alex.servustech.fragments.googlemaps.GoogleMapsFragment;
 import com.example.alex.servustech.fragments.randomFacts.RandomFactsFragment;
 import com.example.alex.servustech.fragments.recycleView.RecycleViewFragment;
 
@@ -82,6 +83,8 @@ public class MainScreenActivity extends AppCompatActivity {
                 return new RandomFactsFragment();
             case "Recycle View":
                 return RecycleViewFragment.newInstance();
+            case "Maps":
+                return new GoogleMapsFragment();
             default:
                 return new DetailsFragment();
         }
