@@ -39,7 +39,7 @@ public class RecycleViewFragment extends Fragment implements RecycleViewContract
 
     private Unbinder mUnbinder;
 
-    RecycleViewContract.Presenter mPresenter;
+    private RecycleViewContract.Presenter mPresenter;
     private CustomAdapter mAdapter;
 
     public static RecycleViewFragment newInstance() {
@@ -51,8 +51,9 @@ public class RecycleViewFragment extends Fragment implements RecycleViewContract
         return fragment;
     }
 
-    public RecycleViewFragment() {
-    }
+    public RecycleViewFragment() {}
+
+
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -79,6 +80,8 @@ public class RecycleViewFragment extends Fragment implements RecycleViewContract
 
         return rootView;
     }
+
+
 
     @Override
     public void onDestroyView() {

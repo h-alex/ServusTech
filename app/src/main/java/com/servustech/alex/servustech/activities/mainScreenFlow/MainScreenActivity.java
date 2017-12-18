@@ -1,11 +1,14 @@
 package com.servustech.alex.servustech.activities.mainScreenFlow;
 
+import android.support.v4.view.GravityCompat;
+import android.support.v7.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.servustech.alex.servustech.R;
@@ -41,6 +44,12 @@ public class MainScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_drawer);
         mUnbinder = ButterKnife.bind(this);
         mNavigationView.setNavigationItemSelectedListener(setupListener());
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         if (savedInstance == null) {
             mCurrentTitle = getResources().getString(DEFAULT_TITLE);
@@ -103,4 +112,13 @@ public class MainScreenActivity extends AppCompatActivity {
         outState.putInt(FRAGMENT_NUMBER_KEY, mSelectedFragment);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

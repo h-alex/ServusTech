@@ -47,7 +47,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         } else {
             holder.icon.setImageResource(R.drawable.ic_broken_image_black_48dp);
         }
+
     }
+
+
+
 
 
     @Override
