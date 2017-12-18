@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:background="@drawable/layout_border">
+
+    <ImageView
+        android:id="@+id/marker_info_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_info_outline_black_48dp" />
+
+    <TextView
+        android:id="@+id/marker_info_title"
+        style="@style/DefaultText"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_toEndOf="@+id/marker_info_icon"
+
+        android:textSize="14sp" />
+
+
+    <TextView
+        android:id="@+id/marker_info_contact"
+        style="@style/DefaultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/marker_info_title"
+        android:layout_marginStart="2dp"
+        android:layout_toEndOf="@+id/marker_info_icon" />
+
+    <TextView
+        android:id="@+id/marker_info_address"
+        style="@style/DefaultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/marker_info_contact"
+        android:layout_marginStart="2dp"
+        android:layout_toEndOf="@+id/marker_info_icon" />
+
+
+</RelativeLayout>
