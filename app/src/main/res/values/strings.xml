@@ -51,4 +51,8 @@
     <string name="google_api_key" translatable="false">AIzaSyDP_4Y8ZyqEWzgc5pyIUL6HnK0HSrtlceU</string>
     <string name="no_contact">No contact</string>
     <string name="no_location">No location available</string>
+    <string name="credentials">Credentials</string>
+    <string name="drawer_random_fact">Random fact</string>
+    <string name="drawer_categories">Categories</string>
+    <string name="drawer_map">Map</string>
 </resources>

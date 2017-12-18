@@ -35,4 +35,6 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.google.android.gms:play-services-maps:11.6.2'
+    compile "com.android.support:design:26.1.0"
+
 }

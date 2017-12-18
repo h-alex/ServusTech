@@ -2,12 +2,11 @@ package com.servustech.alex.servustech.activities.mainScreenFlow;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.MenuItem;
 
 import com.servustech.alex.servustech.R;
 import com.servustech.alex.servustech.fragments.details.DetailsFragment;
@@ -20,7 +19,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class MainScreenActivity extends AppCompatActivity {
-    private static final int DEFAULT_FRAGMENT_POSITION = 0;
+    private static final int DEFAULT_FRAGMENT_POSITION = R.id.drawer_credentials;
+    private static final int DEFAULT_TITLE = R.string.credentials;
     private static final String FRAGMENT_NUMBER_KEY = "current_fragment_position";
     public static final String FRAGMENT_TITLE_KEY = "fragment_title";
 
@@ -28,10 +28,10 @@ public class MainScreenActivity extends AppCompatActivity {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    @BindView(R.id.drawer_list)
-    ListView mDrawerList;
+    @BindView(R.id.navigation_view)
+    NavigationView mNavigationView;
 
-    private String[] mDrawerOptions;
+    private String mCurrentTitle;
     private int mSelectedFragment;
 
 
@@ -40,35 +40,32 @@ public class MainScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_main_drawer);
         mUnbinder = ButterKnife.bind(this);
+        mNavigationView.setNavigationItemSelectedListener(setupListener());
 
-        mDrawerOptions = getResources().getStringArray(R.array.drawer_options);
-        mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, mDrawerOptions));
-
-        // Listener for the click events
-        mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                changeFragment(position); // change the fragment
-                mDrawerLayout.closeDrawers(); // close the drawer
-            }
-        });
-
-        /*
-         If there is no saved instance, we display the default fragment
-         If there is no saved instance, it means we have no fragments previously saved
-         We display the default one
-         */
         if (savedInstance == null) {
+            mCurrentTitle = getResources().getString(DEFAULT_TITLE);
             changeFragment(DEFAULT_FRAGMENT_POSITION);
         }
     }
 
+    private NavigationView.OnNavigationItemSelectedListener setupListener() {
+        return new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                mCurrentTitle = item.getTitle().toString();
+                changeFragment(item.getItemId());
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        };
+    }
 
-    private void changeFragment(int position) {
-        mSelectedFragment = position;
-        Fragment fragment = getSelectedFragment(mDrawerOptions[position]);
+
+    private void changeFragment(int id) {
+        mSelectedFragment = id;
+        Fragment fragment = getSelectedFragment(id);
         Bundle args = new Bundle();
-        args.putString(FRAGMENT_TITLE_KEY, mDrawerOptions[position]);
+        args.putString(FRAGMENT_TITLE_KEY, mCurrentTitle);
         fragment.setArguments(args);
         getFragmentManager()
                 .beginTransaction()
@@ -77,13 +74,13 @@ public class MainScreenActivity extends AppCompatActivity {
     }
 
 
-    private Fragment getSelectedFragment(String fragmentName) {
-        switch (fragmentName) {
-            case "Random fact":
+    private Fragment getSelectedFragment(int id) {
+        switch (id) {
+            case R.id.drawer_random_fact:
                 return new RandomFactsFragment();
-            case "Recycle View":
+            case R.id.drawer_categories:
                 return RecycleViewFragment.newInstance();
-            case "Maps":
+            case R.id.drawer_map:
                 return new GoogleMapsFragment();
             default:
                 return new DetailsFragment();
