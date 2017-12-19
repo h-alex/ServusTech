@@ -3,6 +3,8 @@ package com.servustech.alex.servustech.model.category;
 import com.servustech.alex.servustech.model.Icon;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 
 public class Category {
 
@@ -15,6 +17,9 @@ public class Category {
 
     @SerializedName("icon")
     private Icon icon;
+
+    @SerializedName("categories")
+    private List<Category> categories;
 
     public Category() {
         this.id = null;
@@ -44,5 +49,16 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public int getNumberOfSubcategories() {
+        if (categories == null) {
+            return 0;
+        }
+        return categories.size();
     }
 }

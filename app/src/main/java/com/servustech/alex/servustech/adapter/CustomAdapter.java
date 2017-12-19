@@ -8,7 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.servustech.alex.servustech.R;
+import com.servustech.alex.servustech.fragments.details.DetailsContract;
 import com.servustech.alex.servustech.model.category.Category;
+import com.servustech.alex.servustech.model.interfaces.OnRecycleViewClick;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -18,19 +20,20 @@ import butterknife.ButterKnife;
 
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
-    private List<Category> mDataSet;
+    private static OnRecycleViewClick mClickListener;
 
+    private List<Category> mDataSet;
     public CustomAdapter(List<Category> dataSet) {
         mDataSet = dataSet;
     }
 
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+        final ViewHolder viewHolder = new ViewHolder(LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.recycle_view_item, parent, false)
-        );
+                .inflate(R.layout.recycle_view_item, parent, false));
+        return viewHolder;
     }
 
 
@@ -50,8 +53,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     }
 
-
-
+    public void setClickListener(OnRecycleViewClick callback) {
+        mClickListener = callback;
+    }
 
 
     @Override
@@ -65,8 +69,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
+    public Category getItemAt(int position) {
+        return mDataSet.get(position);
+    }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        private final View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mClickListener.onRecycleViewClick(getAdapterPosition());
+            }
+        };
+
         @BindView(R.id.tv_category_id)
         TextView id;
         @BindView(R.id.tv_category_name)
@@ -74,9 +88,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         @BindView(R.id.iv_category_icon)
         ImageView icon;
 
+
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(listener);
         }
+
+
     }
 }

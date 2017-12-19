@@ -1,6 +1,7 @@
 package com.servustech.alex.servustech.fragments.recycleView;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,11 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.servustech.alex.servustech.R;
+import com.servustech.alex.servustech.activities.itemdetails.CategoryActivity;
 import com.servustech.alex.servustech.activities.mainScreenFlow.MainScreenActivity;
 import com.servustech.alex.servustech.adapter.CustomAdapter;
 import com.servustech.alex.servustech.model.category.Category;
+import com.servustech.alex.servustech.model.category.ParcelableCategory;
+import com.servustech.alex.servustech.model.interfaces.OnRecycleViewClick;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +30,9 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class RecycleViewFragment extends Fragment implements RecycleViewContract.View {
+public class RecycleViewFragment extends Fragment implements RecycleViewContract.View, OnRecycleViewClick {
     private static final String TAG = RecycleViewFragment.class.getSimpleName();
+    public static final String KEY_TO_PARCELABLE = "key_to_parcelable";
 
     @BindView(R.id.recycle_view)
     RecyclerView mRecyclerView;
@@ -74,10 +80,11 @@ public class RecycleViewFragment extends Fragment implements RecycleViewContract
         mPresenter.requestResults();
         mRefreshLayout.setOnRefreshListener(getSwipeToRefreshListener());
         mAdapter = new CustomAdapter(new ArrayList<Category>());
+
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
+        mAdapter.setClickListener(this);
         return rootView;
     }
 
@@ -134,4 +141,10 @@ public class RecycleViewFragment extends Fragment implements RecycleViewContract
         };
     }
 
+    @Override
+    public void onRecycleViewClick(int i) {
+        Intent categoryPage = new Intent(getActivity().getApplicationContext(), CategoryActivity.class);
+        categoryPage.putExtra(KEY_TO_PARCELABLE, new ParcelableCategory(mAdapter.getItemAt(i)));
+        startActivity(categoryPage);
+    }
 }

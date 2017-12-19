@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Icon {
     private static final String DEFAULT_ICON_SIZE = "bg_64";
+    private static final String BIG_ICON_SIZE = "bg_88";
 
     @SerializedName("prefix")
     private String prefix;
@@ -17,6 +18,10 @@ public class Icon {
 
     public String getImageURL() {
         return prefix + DEFAULT_ICON_SIZE + suffix;
+    }
+
+    public String getBigImageURL() {
+        return prefix + BIG_ICON_SIZE + suffix;
     }
 
     public Icon(String prefix, String suffix) {
