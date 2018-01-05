@@ -3,9 +3,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
+    <!--TextView for NEWS-->
     <TextView
+        android:id="@+id/tv_random_fact_news"
+        style="@style/DefaultText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/random_fact"/>
+        android:layout_above="@id/tv_random_fact_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="46dp"
+        android:text="@string/random_fact_NEWS" />
+
+
+    <!--TextView for Title-->
+    <TextView
+        android:id="@+id/tv_random_fact_title"
+        style="@style/DefaultText"
+        android:layout_width="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+
+    <!--TextView for Body-->
+    <TextView
+        android:id="@+id/tv_random_fact_body"
+        style="@style/DefaultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_random_fact_title"/>
+
 </RelativeLayout>

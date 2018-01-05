@@ -1,5 +1,6 @@
 package com.servustech.alex.servustech.activities.itemdetails;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -68,6 +69,7 @@ public class CategoryActivity extends AppCompatActivity {
             mIcon.setImageResource(R.drawable.ic_broken_image_black_48dp);
         }
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {

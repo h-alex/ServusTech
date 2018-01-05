@@ -5,6 +5,7 @@
     <string name="tv_pass">Password</string>
     <string name="tv_confirm_pass">Confirmation</string>
 
+
     <string name="ed_email">e.g. youremail@email.com</string>
     <string name="ed_password">6 letters and 1 digit</string>
     <string name="ed_confirm_password">Retype your password here</string>
@@ -13,22 +14,18 @@
 
     <string name="signup_email">email from signup</string>
     <string name="signup_pass">password from signup</string>
-    <string name="errors_taking_photo">Cannot save the picture!</string>
     <string name="failed">Failed</string>
 
+
+    <!--Error messages -->
+    <string name="errors_taking_photo">Cannot save the picture!</string>
     <string name="register_failed">Could not register!</string>
     <string name="permission_not_granted">Storage permission is to be able to save the pictures on your device.</string>
     <string name="warning_title">Warning</string>
     <string name="camera_not_available">Camera is busy for the moment. Try again later</string>
     <string name="file_not_created">A file for the photo could not be created. Please try again</string>
-    <string name="random_fact">Java was called Oak at the beginning</string>
+    <string name="random_fact_NEWS">NEWS</string>
 
-    <string-array name="drawer_options">
-        <item>Credentials</item>
-        <item>Random fact</item>
-        <item>Recycle View</item>
-        <item>Maps</item>
-    </string-array>
 
     <string name="recycle_view_info">Contains(or will contain) a list of pictures-string list using an `Recycle View`</string>
 
@@ -48,12 +45,21 @@
 
 
     <!-- Google API Key-->
-    <string name="google_api_key" translatable="false">AIzaSyDP_4Y8ZyqEWzgc5pyIUL6HnK0HSrtlceU</string>
+    <string name="google_maps_api_key" translatable="false">AIzaSyDP_4Y8ZyqEWzgc5pyIUL6HnK0HSrtlceU</string>
+
+    <!-- Used in @goooglemaps package-->
     <string name="no_contact">No contact</string>
     <string name="no_location">No location available</string>
+
+    <!-- Used for the @drawer-->
     <string name="credentials">Credentials</string>
-    <string name="drawer_random_fact">Random fact</string>
+    <string name="drawer_news">News</string>
     <string name="drawer_categories">Categories</string>
     <string name="drawer_map">Map</string>
+
     <string name="category_title">Category</string>
+
+    <!--Used in NotificationUpdate class-->
+    <string name="no_new_title">No new title</string>
+    <string name="no_new_body">No new body</string>
 </resources>

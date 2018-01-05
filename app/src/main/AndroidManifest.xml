@@ -24,6 +24,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -31,17 +32,34 @@
         <!-- The API key for google Maps -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_api_key" />
+            android:value="@string/google_maps_api_key" />
 
+        <!--MainActivity-->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activities.registerFlow.RegisterActivity" />
         <activity android:name=".activities.mainScreenFlow.MainScreenActivity" />
+
+        <!--We register our MessageReceiver as a service to be able to receive notifications-->
+        <!-- even when the app is closed. -->
+        <service android:name=".utils.firebase.MessageReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
+        <service android:name=".utils.firebase.InstanceIdService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -53,7 +71,19 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".activities.itemdetails.CategoryActivity"/>
+        <activity android:name=".activities.itemdetails.CategoryActivity" />
+
+
+
+        <!--There are currently some bugs with Google Cloud Messaging (the icons does not appear in status bar)-->
+        <!--This should solve the problem-->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_announcement_white_24dp" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
     </application>
 
 </manifest>
